@@ -13,10 +13,10 @@ type MenuSelected = {
 // Додати тип Menu Selected
 
 const MenuSelectedContext = createContext<MenuSelected>({
-  selectedMenu: {id: '', title: ''},
+  selectedMenu: {id: 'first', title: ''},
 });
 
-type MenuAction {
+type MenuAction = {
   onSelectedMenu: (selectedMenu: SelectedMenu) => void;
 }
 
@@ -32,7 +32,7 @@ type PropsProvider = {
 
 function MenuProvider({ children }: PropsProvider) {
   // Додати тип для SelectedMenu він повинен містити { id }
-  const [selectedMenu<id>, setSelectedMenu] = useState<SelectedMenu>({id: '', title: ''});
+  const [selectedMenu, setSelectedMenu] = useState<SelectedMenu>({id: 'first', title: ''});
 
   const menuContextAction = useMemo(
     () => ({
@@ -58,7 +58,7 @@ function MenuProvider({ children }: PropsProvider) {
 }
 
 type PropsMenu = {
-  menus: Menu{}; // Додайте вірний тип для меню
+  menus: Menu[]; // Додайте вірний тип для меню
 };
 
 function MenuComponent({ menus }: PropsMenu) {
@@ -68,7 +68,7 @@ function MenuComponent({ menus }: PropsMenu) {
   return (
     <>
       {menus.map((menu) => (
-        <div key={menu.id} onClick={() => onSelectedMenu({ id: menu.id })}>
+        <div key={menu.id} onClick={() => onSelectedMenu({ id: menu.id, title: menu.title })}>
           {menu.title}{" "}
           {selectedMenu.id === menu.id ? "Selected" : "Not selected"}
         </div>
